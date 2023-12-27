@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今までリスト</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* Other styles remain the same */
+
+    #loginForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #loginForm input {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="loginForm">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginButton">Login</button>
+  </div>
+
+  <!-- Remaining HTML code remains the same -->
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const taskElements = document.getElementById('taskElements');
+
+    // Predefined usernames and passwords
+    const credentials = {
+      '宮竹さゆり': '1111952',
+      'user2': 'user2',
+      'user3': 'user3',
+      'user4': 'user4',
+      'user5': 'user5',
+      'user6': 'user6',
+      'user7': 'user7',
+      'user8': 'user8',
+      'user9': 'user9',
+      'user10': 'user10'
+    };
+
+    let loggedInUser = null;
+
+    // Login button click event listener
+    loginButton.addEventListener('click', function () {
+      const enteredUsername = usernameInput.value.trim();
+      const enteredPassword = passwordInput.value.trim();
+
+      if (!enteredUsername || !enteredPassword) {
+        alert('Please enter both username and password.');
+        return;
+      }
+
+      // Check if the entered username is in the predefined list
+      if (credentials.hasOwnProperty(enteredUsername) && credentials[enteredUsername] === enteredPassword) {
+        // Save the logged-in user to localStorage
+        localStorage.setItem('loggedInUser', enteredUsername);
+        loggedInUser = enteredUsername;
+
+        // Redirect to the user's task page
+        window.location.href = `${loggedInUser}.html`;
+      } else {
+        alert('Invalid username or password. Please enter valid credentials.');
+      }
+    });
+
+    // Function to create task element remains the same
+
+    // Function to add task remains the same with minor modifications
+
+    // Function to delete task remains the same
+
+    // Function to update total tasks remains the same
+
+    // Function to sort tasks by deadline remains the same
+
+    // Function to save tasks to storage remains the same
+
+    // Function to remove from storage remains the same
+
+    // Event listeners remain the same
+
+  });
+</script>
+
+</body>
+
+</html>
