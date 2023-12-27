@@ -80,6 +80,15 @@
       cursor: pointer;
       width: auto;
     }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group label {
+      margin-right: 5px;
+    }
   </style>
 </head>
 
@@ -87,13 +96,12 @@
 
   <h1>「宮竹さゆり」のリスト</h1>
 
-  <!-- Back button to return to the login page -->
-  <a href="index.html">戻る</a>
-
-
   <div id="addTaskForm">
     <input type="text" id="newTaskTitle" placeholder="名前">
-    <input type="date" id="newTaskDeadline">
+    <div class="input-group">
+      <label for="newTaskDeadline">日付</label>
+      <input type="date" id="newTaskDeadline">
+    </div>
     <textarea id="newTaskComment" placeholder="コメント"></textarea>
     <button id="addTaskButton">追加</button>
   </div>
@@ -121,10 +129,15 @@
         taskTitle.className = 'title';
         taskTitle.innerText = title;
 
+        const deadlineContainer = document.createElement('div');
+        deadlineContainer.className = 'input-group';
+        const dateLabel = document.createElement('label');
+        dateLabel.innerText = '日付';
         const deadlineInput = document.createElement('input');
         deadlineInput.type = 'date';
         deadlineInput.value = deadline;
-        deadlineInput.placeholder = 'Deadline';
+        deadlineContainer.appendChild(dateLabel);
+        deadlineContainer.appendChild(deadlineInput);
 
         const commentTextarea = document.createElement('textarea');
         commentTextarea.value = comment;
@@ -136,7 +149,7 @@
         deleteButton.addEventListener('click', () => deleteTask(listItem, title));
 
         listItem.appendChild(taskTitle);
-        listItem.appendChild(deadlineInput);
+        listItem.appendChild(deadlineContainer);
         listItem.appendChild(commentTextarea);
         listItem.appendChild(deleteButton);
 
