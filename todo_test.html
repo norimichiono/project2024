@@ -161,7 +161,7 @@
   <div id="addTaskForm">
   <input type="text" id="newTaskTitle" placeholder="名前">
   <div class="input-group">
-    <label for="newTaskDeadline">日付</label>
+    <label for="newTaskDeadline">期限</label>
     <input type="date" id="newTaskDeadline">
   </div>
   <textarea id="newTaskComment" placeholder="間柄、年代、現職、職歴、配偶者、扶養家族、ネットワーク経験、趣味、など"></textarea>
@@ -200,7 +200,7 @@
         const deadlineContainer = document.createElement('div');
         deadlineContainer.className = 'input-group';
         const dateLabel = document.createElement('label');
-        dateLabel.innerText = '日付';
+        dateLabel.innerText = '期限';
         const deadlineInput = document.createElement('input');
         deadlineInput.type = 'date';
         deadlineInput.value = deadline;
