@@ -309,7 +309,7 @@
       sortButton.addEventListener('click', sortTasksByDeadline);
 
       // Load tasks from storage on page load
-      const storedToDo = JSON.parse(localStorage.getItem('user8_todo')) || [];
+      const storedTasks = JSON.parse(localStorage.getItem('user8_todo')) || [];
       storedTasks.forEach(task => {
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
