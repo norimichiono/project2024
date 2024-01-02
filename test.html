@@ -245,6 +245,37 @@
 
       updateTotalTasks();
     });
+
+    // ... (Your existing JavaScript code)
+
+function downloadTasksAsCSV() {
+  const tasks = [];
+  Array.from(taskList.children).forEach(task => {
+    const title = task.querySelector('.title').innerText;
+    const deadline = task.querySelector('input[type="date"]').value;
+    const comment = task.querySelector('textarea').value;
+    tasks.push({ title, deadline, comment });
+  });
+
+  // Convert tasks to CSV format
+  const csvContent = "data:text/csv;charset=utf-8,"
+    + tasks.map(task => Object.values(task).join(',')).join('\n');
+
+  // Create a data URI for the CSV content
+  const encodedUri = encodeURI(csvContent);
+
+  // Create a link element, set its attributes, and trigger a click event
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', 'tasks.csv');
+  document.body.appendChild(link);
+  link.click();
+}
+
+document.getElementById('downloadButton').addEventListener('click', downloadTasksAsCSV);
+
+// ... (Your existing JavaScript code)
+
   </script>
 </body>
 
