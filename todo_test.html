@@ -273,12 +273,12 @@
         taskTitle.value = title;
 
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Delete';
+        deleteButton.innerText = '削除';
         deleteButton.className = 'delete-button';
         deleteButton.addEventListener('click', () => deleteTask(listItem));
 
         const completeButton = document.createElement('button');
-        completeButton.innerText = 'Complete';
+        completeButton.innerText = '✔';
         completeButton.className = 'complete-button';
         if (completed) {
           completeButton.classList.add('completed');
