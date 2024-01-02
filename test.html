@@ -62,8 +62,7 @@
     }
 
     #addTaskButton,
-    #sortButton,
-    #shareButton
+    #sortButton
     {
       background-color: #4CAF50;
       color: white;
@@ -71,9 +70,20 @@
       padding: 8px 16px;
       cursor: pointer;
       width: 100%;
-      max-width: 200px;
+      max-width: 70px;
     }
 
+        #shareButton
+    {
+      background-color: #FFFFFFF;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 70px;
+    }
+    
     .task button {
       background-color: #ff3333;
       color: white;
@@ -111,7 +121,9 @@
   <textarea id="newTaskComment" placeholder="コメント"></textarea>
 </div>
   <button id="addTaskButton" class="button">追加</button>
+  <br>
   <a href="index.html">完了</a>
+  <br>
   <button id="shareButton" class="button">共有</button>
   <p>人数: <span id="totalTasks">0</span></p>
 
