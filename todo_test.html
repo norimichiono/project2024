@@ -323,7 +323,7 @@ function shareTasks() {
     const title = task.querySelector('.title').innerText;
     const deadline = task.querySelector('input[type="date"]').value;
     const comment = task.querySelector('textarea').value;
-    tasks.push(`Title: ${title}\nDeadline: ${deadline}\nComment: ${comment}\n\n`);
+    tasks.push(`To Do： ${title}\n期限： ${deadline}\n概要： ${comment}\n\n`);
   });
 
   // Convert tasks to plain text format
