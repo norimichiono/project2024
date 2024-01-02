@@ -332,7 +332,12 @@
       // For simplicity, let's alert the content for now
       alert('Uploaded Content:\n\n' + content);
     }
-      
+         
+    uploadFileInput.addEventListener('change', handleFileUpload);
+
+    uploadButton.addEventListener('click', function () {
+      uploadFileInput.click();
+    });
 // ... (Your existing JavaScript code)
 
 function shareTasks() {
@@ -370,12 +375,7 @@ document.getElementById('shareButton').addEventListener('click', shareTasks);
 
       updateTotalTasks();
     });
-    
-    uploadFileInput.addEventListener('change', handleFileUpload);
-
-    uploadButton.addEventListener('click', function () {
-      uploadFileInput.click();
-    });
+ 
   </script>
 </body>
 
