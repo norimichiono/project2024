@@ -165,6 +165,8 @@
   <textarea id="newTaskComment" placeholder="間柄、年代、現職、職歴、配偶者、扶養家族、ネットワーク経験、趣味、など"></textarea>
 </div>
   <button id="addTaskButton" class="button">追加</button>
+  <input type="file" id="uploadFileInput" accept=".txt" style="display: none;">
+<button id="uploadButton">アップロード</button>
   <br>
   <a href="index.html">完了</a>
   <br>
@@ -184,7 +186,9 @@
       const totalTasksElement = document.getElementById('totalTasks');
       const addTaskButton = document.getElementById('addTaskButton');
       const sortButton = document.getElementById('sortButton');
-
+      const uploadFileInput = document.getElementById('uploadFileInput');
+      const uploadButton = document.getElementById('uploadButton');
+    
       let ascendingOrder = true;
 
       function createTaskElement(title, deadline, comment) {
@@ -307,6 +311,28 @@
         taskList.appendChild(taskElement);
       });
 
+    function handleFileUpload(event) {
+      const fileInput = event.target;
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const content = e.target.result;
+          processUploadedTasks(content);
+        };
+
+        reader.readAsText(file);
+      }
+    }
+
+    function processUploadedTasks(content) {
+      // Implement the logic to parse the content and update the task list
+      // For simplicity, let's alert the content for now
+      alert('Uploaded Content:\n\n' + content);
+    }
+      
 // ... (Your existing JavaScript code)
 
 function shareTasks() {
@@ -343,6 +369,12 @@ document.getElementById('shareButton').addEventListener('click', shareTasks);
 
 
       updateTotalTasks();
+    });
+    
+    uploadFileInput.addEventListener('change', handleFileUpload);
+
+    uploadButton.addEventListener('click', function () {
+      uploadFileInput.click();
     });
   </script>
 </body>
