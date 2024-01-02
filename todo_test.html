@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>「TEST版」のTO DO</title>
+  <title>「TEST版」To Doリスト</title>
 
-   <style>
+  <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -163,205 +163,258 @@
 
 <body>
 
-  <h1>「TEST版」のTO DO</h1>
- <!-- Back button to return to the login page -->
-  <a href="test.html">マイリストへ戻る</a>
+  <h1>「TEST版」To Doリスト</h1>
 
-  <div id="addTaskForm">
-  <input type="text" id="newTaskTitle" placeholder="To Doの題名">
-  <div class="input-group">
-    <label for="newTaskDeadline">期限</label>
-    <input type="date" id="newTaskDeadline">
+  <div>
+    <label for="newTaskDate">日付</label>
+    <input type="date" id="newTaskDate">
   </div>
-  <textarea id="newTaskComment" placeholder="To Doの概要を書いてください。"></textarea>
-</div>
-  <button id="addTaskButton" class="button">追加</button>
-  <br>
-  <a href="index.html">完了</a>
-  <br>
 
-  <p>人数: <span id="totalTasks">0</span></p>
-
-  <div id="buttonContainer">
-  <button id="sortButton">並び替え</button>
-  <button id="shareButton" class="button">共有</button>
+  <div>
+    <label for="newTaskTime">時間</label>
+    <input type="text" id="newTaskTime" pattern="[0-9]{4}" placeholder="例：0915、1430" required>
   </div>
-    
+
+  <div>
+    <label for="newTaskTitle">タスク</label>
+    <input type="text" id="newTaskTitle" placeholder="花子さんとサロンでABC" required>
+  </div>
+
+  <div>
+    <button id="addTaskButton">追加</button>
+  </div>
+
+  <div>
+    <button id="sortDateButton">日付で並び換え</button>
+    <button id="sortTimeButton">時間で並び換え</button>
+  </div>
+
   <ul id="taskList"></ul>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const taskList = document.getElementById('taskList');
-      const totalTasksElement = document.getElementById('totalTasks');
       const addTaskButton = document.getElementById('addTaskButton');
-      const sortButton = document.getElementById('sortButton');
+      const sortDateButton = document.getElementById('sortDateButton');
+      const sortTimeButton = document.getElementById('sortTimeButton');
 
-      let ascendingOrder = true;
+      // Set min attribute for date input
+      const currentDate = new Date().toISOString().split('T')[0];
+      document.getElementById('newTaskDate').min = currentDate;
 
- function createTaskElement(title, deadline, comment) {
-  const listItem = document.createElement('li');
-  listItem.className = 'task';
+      function saveToLocalStorage() {
+        const dateGroups = taskList.querySelectorAll('.dateGroup');
+        const dataToSave = [];
 
-  const taskTitle = document.createElement('div');
-  taskTitle.className = 'title';
-  taskTitle.innerText = title;
+        dateGroups.forEach(dateGroup => {
+          const date = dateGroup.getAttribute('data-date');
+          const tasks = dateGroup.querySelectorAll('.task');
 
-  const taskInfo = document.createElement('div');
-  taskInfo.className = 'task-info';
+          const tasksData = [];
+          tasks.forEach(task => {
+            const time = task.querySelector('input[type="text"]').value;
+            const title = task.querySelector('input[type="text"]').value;
+            const completed = task.querySelector('.complete-button').classList.contains('completed');
 
-  const deadlineContainer = document.createElement('div');
-  deadlineContainer.className = 'input-group';
-   
-  const dateLabel = document.createElement('label');
-  dateLabel.innerText = '期限';
-   
-  const deadlineInput = document.createElement('input');
-  deadlineInput.type = 'date';
-  deadlineInput.value = deadline;
-  deadlineContainer.appendChild(dateLabel);
-  deadlineContainer.appendChild(deadlineInput);
+            tasksData.push({
+              time,
+              title,
+              completed,
+            });
+          });
 
-  const deleteButton = document.createElement('button');
-  deleteButton.innerText = '削除';
-  deleteButton.addEventListener('click', () => deleteTask(listItem, title));
-  taskInfo.appendChild(deadlineContainer);
-  taskInfo.appendChild(deleteButton);
+          dataToSave.push({
+            date,
+            tasks: tasksData,
+          });
+        });
 
-  const commentTextarea = document.createElement('textarea');
-  commentTextarea.value = comment;
-  commentTextarea.placeholder = 'To Doの概要を書いてください。';
-  commentTextarea.className = 'comment';
+        localStorage.setItem('todoData', JSON.stringify(dataToSave));
+      }
 
-  listItem.appendChild(taskTitle);
-  listItem.appendChild(taskInfo);
-  listItem.appendChild(commentTextarea);
+      function loadFromLocalStorage() {
+        const savedData = localStorage.getItem('todoData');
 
-  taskTitle.addEventListener('click', () => {
-    const comment = listItem.querySelector('.comment');
-    comment.style.display = comment.style.display === 'none' ? 'block' : 'none';
-  });
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
 
-  return listItem;
-}
+          parsedData.forEach(dateGroupData => {
+            const { date, tasks } = dateGroupData;
 
-      function addTask() {
-        const newTaskTitle = document.getElementById('newTaskTitle').value;
-        const newTaskDeadline = document.getElementById('newTaskDeadline').value;
-        const newTaskComment = document.getElementById('newTaskComment').value;
+            tasks.forEach(taskData => {
+              addTask(date, taskData.time, taskData.title, taskData.completed);
+            });
+          });
+        }
+      }
 
-        if (newTaskTitle.trim() === '') {
-          alert('名前を入れてください。');
-          return;
+      function createTaskElement(date, time, title, completed) {
+        const listItem = document.createElement('li');
+        listItem.className = 'task';
+        listItem.setAttribute('data-date', date);
+
+        const taskTime = document.createElement('input');
+        taskTime.type = 'text';
+        taskTime.value = time;
+        taskTime.readOnly = true;
+
+        const taskTitle = document.createElement('input');
+        taskTitle.type = 'text';
+        taskTitle.value = title;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.className = 'delete-button';
+        deleteButton.addEventListener('click', () => deleteTask(listItem));
+
+        const completeButton = document.createElement('button');
+        completeButton.innerText = 'Complete';
+        completeButton.className = 'complete-button';
+        if (completed) {
+          completeButton.classList.add('completed');
+        }
+        completeButton.addEventListener('click', () => completeTask(completeButton));
+
+        listItem.appendChild(taskTime);
+        listItem.appendChild(taskTitle);
+        listItem.appendChild(completeButton);
+        listItem.appendChild(deleteButton);
+
+        return listItem;
+      }
+
+      function addTask(date, time, title, completed = false) {
+        const taskElement = createTaskElement(date, time, title, completed);
+        const existingDateGroup = document.querySelector(`.dateGroup[data-date="${date}"]`);
+
+        if (existingDateGroup) {
+          const dateContent = existingDateGroup.querySelector('.dateContent');
+          dateContent.appendChild(taskElement);
+        } else {
+          const dateGroup = document.createElement('div');
+          dateGroup.className = 'dateGroup';
+          dateGroup.setAttribute('data-date', date);
+
+          const dateHeader = document.createElement('div');
+          dateHeader.className = 'dateHeader';
+
+          const dateInput = document.createElement('input');
+          dateInput.type = 'date';
+          dateInput.value = date;
+          dateInput.disabled = true;
+
+          const toggleButton = document.createElement('button');
+          toggleButton.innerText = '+';
+          toggleButton.className = 'toggle-button';
+          toggleButton.addEventListener('click', () => toggleDateContent(dateGroup));
+
+          const deleteGroupButton = document.createElement('button');
+          deleteGroupButton.innerText = '✕';
+          deleteGroupButton.className = 'delete-group-button';
+          deleteGroupButton.addEventListener('click', () => deleteDateGroup(dateGroup));
+
+          const dateContent = document.createElement('div');
+          dateContent.className = 'dateContent';
+
+          dateContent.appendChild(taskElement);
+
+          dateHeader.appendChild(dateInput);
+          dateHeader.appendChild(toggleButton);
+          dateHeader.appendChild(deleteGroupButton);
+
+          dateGroup.appendChild(dateHeader);
+          dateGroup.appendChild(dateContent);
+
+          taskList.appendChild(dateGroup);
         }
 
-        const taskElement = createTaskElement(newTaskTitle, newTaskDeadline, newTaskComment);
-        taskList.insertBefore(taskElement, taskList.firstChild);
-
-        saveTasksToStorage();
-        document.getElementById('newTaskTitle').value = '';
-        document.getElementById('newTaskDeadline').value = '';
-        document.getElementById('newTaskComment').value = '';
-
-        updateTotalTasks();
+        saveToLocalStorage();
       }
 
-      function deleteTask(listItem, title) {
+      function deleteTask(listItem) {
         listItem.remove();
-        removeFromStorage(title);
-        updateTotalTasks();
+        saveToLocalStorage();
       }
 
-      function updateTotalTasks() {
-        totalTasksElement.innerText = taskList.children.length;
+      function completeTask(completeButton) {
+        if (completeButton.classList.contains('completed')) {
+          completeButton.classList.remove('completed');
+        } else {
+          completeButton.classList.add('completed');
+        }
+
+        // Enable the button regardless of its current state
+        completeButton.disabled = false;
+
+        saveToLocalStorage();
       }
 
-      function sortTasksByDeadline() {
-        const tasks = Array.from(taskList.children);
-        tasks.sort((a, b) => {
-          const dateA = new Date(a.querySelector('input[type="date"]').value);
-          const dateB = new Date(b.querySelector('input[type="date"]').value);
+      function deleteDateGroup(dateGroup) {
+        dateGroup.remove();
+        saveToLocalStorage();
+      }
 
-          if (ascendingOrder) {
-            return dateA - dateB;
-          } else {
-            return dateB - dateA;
-          }
+      function toggleDateContent(dateGroup) {
+        const dateContent = dateGroup.querySelector('.dateContent');
+        dateContent.style.display = dateContent.style.display === 'none' ? 'block' : 'none';
+      }
+
+      function sortTasksByDate() {
+        const dateGroups = Array.from(document.querySelectorAll('.dateGroup'));
+        dateGroups.sort((a, b) => {
+          const dateA = new Date(a.getAttribute('data-date'));
+          const dateB = new Date(b.getAttribute('data-date'));
+          return dateA - dateB;
         });
 
         taskList.innerHTML = '';
-        tasks.forEach(task => taskList.appendChild(task));
-
-        // Toggle the order for the next click
-        ascendingOrder = !ascendingOrder;
-
-        saveTasksToStorage();
+        dateGroups.forEach(dateGroup => taskList.appendChild(dateGroup));
       }
 
-      function saveTasksToStorage() {
-        const tasks = [];
-        Array.from(taskList.children).forEach(task => {
-          const title = task.querySelector('.title').innerText;
-          const deadline = task.querySelector('input[type="date"]').value;
-          const comment = task.querySelector('textarea').value;
-          tasks.push({ title, deadline, comment });
+      function sortTasksByTime() {
+        const dateGroups = Array.from(document.querySelectorAll('.dateGroup'));
+
+        dateGroups.forEach(dateGroup => {
+          const tasks = Array.from(dateGroup.querySelectorAll('.task'));
+          tasks.sort((a, b) => {
+            const timeA = a.querySelector('input[type="text"]').value;
+            const timeB = b.querySelector('input[type="text"]').value;
+            return timeA.localeCompare(timeB);
+          });
+
+          const dateContent = dateGroup.querySelector('.dateContent');
+          dateContent.innerHTML = '';
+          tasks.forEach(task => dateContent.appendChild(task));
         });
-        localStorage.setItem('user8_todo', JSON.stringify(tasks));
+
+        saveToLocalStorage();
       }
 
-      function removeFromStorage(title) {
-        const tasks = JSON.parse(localStorage.getItem('user8_todo')) || [];
-        const updatedTasks = tasks.filter(task => task.title !== title);
-        localStorage.setItem('user8_todo', JSON.stringify(updatedTasks));
-      }
+      addTaskButton.addEventListener('click', function () {
+        const newTaskDate = document.getElementById('newTaskDate').value;
+        const newTaskTime = document.getElementById('newTaskTime').value;
+        const newTaskTitle = document.getElementById('newTaskTitle').value;
 
-      addTaskButton.addEventListener('click', addTask);
-      sortButton.addEventListener('click', sortTasksByDeadline);
+        if (newTaskDate.trim() === '' || newTaskTime.trim() === '' || newTaskTitle.trim() === '') {
+          alert('Please fill in all fields.');
+          return;
+        }
 
-      // Load tasks from storage on page load
-      const storedTasks = JSON.parse(localStorage.getItem('user8_todo')) || [];
-      storedTasks.forEach(task => {
-        const taskElement = createTaskElement(task.title, task.deadline, task.comment);
-        taskList.appendChild(taskElement);
+        addTask(newTaskDate, newTaskTime, newTaskTitle);
+
+        document.getElementById('newTaskDate').value = '';
+        document.getElementById('newTaskTime').value = '';
+        document.getElementById('newTaskTitle').value = '';
       });
 
-// ... (Your existing JavaScript code)
+      sortDateButton.addEventListener('click', sortTasksByDate);
+      sortTimeButton.addEventListener('click', sortTasksByTime);
 
-function shareTasks() {
-  const tasks = [];
-  Array.from(taskList.children).forEach(task => {
-    const title = task.querySelector('.title').innerText;
-    const deadline = task.querySelector('input[type="date"]').value;
-    const comment = task.querySelector('textarea').value;
-    tasks.push(`To Do： ${title}\n期限： ${deadline}\n概要： ${comment}\n\n`);
-  });
-
-  // Convert tasks to plain text format
-  const textContent = tasks.join('');
-
-  // Create a temporary textarea to copy text to the clipboard
-  const textarea = document.createElement('textarea');
-  textarea.value = textContent;
-  document.body.appendChild(textarea);
-  
-  // Select and copy the text
-  textarea.select();
-  document.execCommand('copy');
-
-  // Remove the temporary textarea
-  document.body.removeChild(textarea);
-
-  // Provide some feedback to the user
-  alert('テキストがコピーされました！');
-}
-
-document.getElementById('shareButton').addEventListener('click', shareTasks);
-
-// ... (Your existing JavaScript code)
-
-
-      updateTotalTasks();
+      // Load data from localStorage on page load
+      loadFromLocalStorage();
     });
   </script>
+
 </body>
 
 </html>
