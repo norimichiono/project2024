@@ -166,7 +166,7 @@
   </div>
   <textarea id="newTaskComment" placeholder="To Doの概要を書いてください。"></textarea>
 </div>
-  <button id="addTaskButton" class="button">追加</button>
+  <button id="addTaskButtonTodo" class="button">追加</button>
   <br>
   <a href="index.html">完了</a>
   <br>
@@ -174,8 +174,8 @@
   <p>人数: <span id="totalTasks">0</span></p>
 
   <div id="buttonContainer">
-  <button id="sortButton">並び替え</button>
-  <button id="shareButton" class="button">共有</button>
+  <button id="sortButtonTodo">並び替え</button>
+  <button id="shareButtonTodo" class="button">共有</button>
   </div>
     
   <ul id="taskList"></ul>
@@ -296,21 +296,21 @@
           const comment = task.querySelector('textarea').value;
           tasks.push({ title, deadline, comment });
         });
-        localStorage.setItem('user8_tasks', JSON.stringify(tasks));
+        localStorage.setItem('user8_todo', JSON.stringify(tasks));
       }
 
       function removeFromStorage(title) {
-        const tasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+        const tasks = JSON.parse(localStorage.getItem('user8_todo')) || [];
         const updatedTasks = tasks.filter(task => task.title !== title);
-        localStorage.setItem('user8_tasks', JSON.stringify(updatedTasks));
+        localStorage.setItem('user8_todo', JSON.stringify(updatedTasks));
       }
 
       addTaskButton.addEventListener('click', addTask);
       sortButton.addEventListener('click', sortTasksByDeadline);
 
       // Load tasks from storage on page load
-      const storedTasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
-      storedTasks.forEach(task => {
+      const storedToDo = JSON.parse(localStorage.getItem('user8_todo')) || [];
+      storedToDo.forEach(task => {
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
       });
