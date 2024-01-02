@@ -145,8 +145,7 @@
     .input-group label {
       margin-right: 5px;
     }
-
-    
+      
   </style>
 </head>
 
@@ -165,8 +164,13 @@
   <textarea id="newTaskComment" placeholder="間柄、年代、現職、職歴、配偶者、扶養家族、ネットワーク経験、趣味、など"></textarea>
 </div>
   <button id="addTaskButton" class="button">追加</button>
-  <input type="file" id="uploadFileInput" accept=".txt" style="display: none;">
+
+<!-- Add this input element for file upload -->
+<input type="file" id="uploadFileInput" accept=".txt" style="display: none;">
+<!-- Add a button to trigger file upload -->
 <button id="uploadButton">アップロード</button>
+
+<!-- ... (Your existing HTML code) -->
   <br>
   <a href="index.html">完了</a>
   <br>
@@ -188,6 +192,17 @@
       const sortButton = document.getElementById('sortButton');
       const uploadFileInput = document.getElementById('uploadFileInput');
       const uploadButton = document.getElementById('uploadButton');
+      
+    const uploadFileInput = document.getElementById('uploadFileInput');
+    const uploadButton = document.getElementById('uploadButton');
+
+    // Add an event listener to handle file upload
+    uploadFileInput.addEventListener('change', handleFileUpload);
+
+    // Add an event listener to trigger file upload when the button is clicked
+    uploadButton.addEventListener('click', function () {
+      uploadFileInput.click();
+      
     
       let ascendingOrder = true;
 
@@ -311,33 +326,43 @@
         taskList.appendChild(taskElement);
       });
 
-    function handleFileUpload(event) {
-      const fileInput = event.target;
-      const file = fileInput.files[0];
+ function handleFileUpload(event) {
+      const file = event.target.files[0];
 
       if (file) {
         const reader = new FileReader();
 
         reader.onload = function (e) {
-          const content = e.target.result;
-          processUploadedTasks(content);
+          const fileContent = e.target.result;
+          processUploadedTasks(fileContent);
         };
 
         reader.readAsText(file);
       }
     }
 
-    function processUploadedTasks(content) {
-      // Implement the logic to parse the content and update the task list
-      // For simplicity, let's alert the content for now
-      alert('Uploaded Content:\n\n' + content);
-    }
-         
-    uploadFileInput.addEventListener('change', handleFileUpload);
+    function processUploadedTasks(fileContent) {
+      // Split the file content into tasks based on empty lines
+      const tasks = fileContent.split('\n\n');
 
-    uploadButton.addEventListener('click', function () {
-      uploadFileInput.click();
-    });
+      // Process each task and add it to the taskList
+      tasks.forEach(taskContent => {
+        const taskProperties = taskContent.split('\n');
+        const title = taskProperties[0].replace('Title: ', '');
+        const deadline = taskProperties[1].replace('Deadline: ', '');
+        const comment = taskProperties[2].replace('Comment: ', '');
+
+        // Create task element and add it to the taskList
+        const taskElement = createTaskElement(title, deadline, comment);
+        taskList.appendChild(taskElement);
+      });
+
+      // Save the updated tasks to storage
+      saveTasksToStorage();
+
+      // Update the total number of tasks
+      updateTotalTasks();
+    }
 // ... (Your existing JavaScript code)
 
 function shareTasks() {
