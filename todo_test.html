@@ -230,11 +230,11 @@
           });
         });
 
-        localStorage.setItem('todoData', JSON.stringify(dataToSave));
+        localStorage.setItem('user8_todo', JSON.stringify(dataToSave));
       }
 
       function loadFromLocalStorage() {
-        const savedData = localStorage.getItem('todoData');
+        const savedData = localStorage.getItem('user8_todo');
 
         if (savedData) {
           const parsedData = JSON.parse(savedData);
