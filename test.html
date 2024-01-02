@@ -4,16 +4,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>「TEST」のリスト</title>
+  <title>「伊藤順子」のリスト</title>
   <style>
-    /* Styles remain unchanged for brevity */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    #taskList {
+      list-style-type: none;
+      padding: 0;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .task {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .task input[type="date"],
+    .task textarea {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .comment {
+      display: none;
+    }
+
+    .title {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #addTaskForm {
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    #addTaskForm input[type="text"],
+    #addTaskForm input[type="date"],
+    #addTaskForm textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    #addTaskButton,
+    #sortButton {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .task button {
+      background-color: #ff3333;
+      color: white;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      width: auto;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group label {
+      margin-right: 5px;
+    }
   </style>
 </head>
 
 <body>
 
-  <h1>「TEST」のリスト</h1>
-  <!-- Back button to return to the login page -->
+  <h1>「伊藤順子」のリスト</h1>
+ <!-- Back button to return to the login page -->
   <a href="index.html">戻る</a>
   <div id="addTaskForm">
     <input type="text" id="newTaskTitle" placeholder="名前">
@@ -31,15 +113,12 @@
 
   <ul id="taskList"></ul>
 
-  <div id="displayArea"></div>
-
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const taskList = document.getElementById('taskList');
       const totalTasksElement = document.getElementById('totalTasks');
       const addTaskButton = document.getElementById('addTaskButton');
       const sortButton = document.getElementById('sortButton');
-      const displayArea = document.getElementById('displayArea');
 
       let ascendingOrder = true;
 
@@ -144,18 +223,7 @@
           const comment = task.querySelector('textarea').value;
           tasks.push({ title, deadline, comment });
         });
-
-        // Generate HTML code for tasks and save it to the display area
-        const tasksHtml = tasks.map(task => `<div>${task.title}, ${task.deadline}, ${task.comment}</div>`).join('');
-        displayArea.innerHTML = tasksHtml;
-
-        // Save tasks to local storage
-        try {
-          localStorage.setItem('user8_tasks', JSON.stringify(tasks));
-          console.log('Tasks saved to local storage');
-        } catch (error) {
-          console.error('Error saving tasks to local storage:', error);
-        }
+        localStorage.setItem('user8_tasks', JSON.stringify(tasks));
       }
 
       function removeFromStorage(title) {
