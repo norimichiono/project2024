@@ -193,6 +193,12 @@
         const listItem = document.createElement('li');
         listItem.className = 'task';
 
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'taskCheckbox';
+
+        listItem.appendChild(checkbox);
+        
         const taskTitle = document.createElement('div');
         taskTitle.className = 'title';
         taskTitle.innerText = title;
