@@ -307,7 +307,7 @@
         taskList.appendChild(taskElement);
       });
 
-      // ... (Your existing JavaScript code)
+// ... (Your existing JavaScript code)
 
 function shareTasks() {
   const tasks = [];
@@ -321,13 +321,26 @@ function shareTasks() {
   // Convert tasks to plain text format
   const textContent = tasks.join('');
 
-  // Prompt the user with the tasks for copying
-  prompt('コピーしてLINEとかで送ってね♬', textContent);
+  // Create a temporary textarea to copy text to the clipboard
+  const textarea = document.createElement('textarea');
+  textarea.value = textContent;
+  document.body.appendChild(textarea);
+  
+  // Select and copy the text
+  textarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea
+  document.body.removeChild(textarea);
+
+  // Provide some feedback to the user
+  alert('テキストがコピーされました！');
 }
 
 document.getElementById('shareButton').addEventListener('click', shareTasks);
 
 // ... (Your existing JavaScript code)
+
 
       updateTotalTasks();
     });
