@@ -117,4 +117,66 @@
       function sortTasksByDeadline() {
         const tasks = Array.from(taskList.children);
         tasks.sort((a, b) => {
-          const dateA = new Date(a.querySelector('input
+          const dateA = new Date(a.querySelector('input[type="date"]').value);
+          const dateB = new Date(b.querySelector('input[type="date"]').value);
+
+          if (ascendingOrder) {
+            return dateA - dateB;
+          } else {
+            return dateB - dateA;
+          }
+        });
+
+        taskList.innerHTML = '';
+        tasks.forEach(task => taskList.appendChild(task));
+
+        // Toggle the order for the next click
+        ascendingOrder = !ascendingOrder;
+
+        saveTasksToStorage();
+      }
+
+      function saveTasksToStorage() {
+        const tasks = [];
+        Array.from(taskList.children).forEach(task => {
+          const title = task.querySelector('.title').innerText;
+          const deadline = task.querySelector('input[type="date"]').value;
+          const comment = task.querySelector('textarea').value;
+          tasks.push({ title, deadline, comment });
+        });
+
+        // Generate HTML code for tasks and save it to the display area
+        const tasksHtml = tasks.map(task => `<div>${task.title}, ${task.deadline}, ${task.comment}</div>`).join('');
+        displayArea.innerHTML = tasksHtml;
+
+        // Save tasks to local storage
+        try {
+          localStorage.setItem('user8_tasks', JSON.stringify(tasks));
+          console.log('Tasks saved to local storage');
+        } catch (error) {
+          console.error('Error saving tasks to local storage:', error);
+        }
+      }
+
+      function removeFromStorage(title) {
+        const tasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+        const updatedTasks = tasks.filter(task => task.title !== title);
+        localStorage.setItem('user8_tasks', JSON.stringify(updatedTasks));
+      }
+
+      addTaskButton.addEventListener('click', addTask);
+      sortButton.addEventListener('click', sortTasksByDeadline);
+
+      // Load tasks from storage on page load
+      const storedTasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+      storedTasks.forEach(task => {
+        const taskElement = createTaskElement(task.title, task.deadline, task.comment);
+        taskList.appendChild(taskElement);
+      });
+
+      updateTotalTasks();
+    });
+  </script>
+</body>
+
+</html>
