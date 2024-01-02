@@ -246,6 +246,45 @@
         return listItem;
       }
 
+function handleFileUpload(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const fileContent = e.target.result;
+          processUploadedTasks(fileContent);
+        };
+
+        reader.readAsText(file);
+      }
+    }
+
+    function processUploadedTasks(fileContent) {
+      // Split the file content into tasks based on empty lines
+      const tasks = fileContent.split('\n\n');
+
+      // Process each task and add it to the taskList
+      tasks.forEach(taskContent => {
+        const taskProperties = taskContent.split('\n');
+        const title = taskProperties[0].replace('Title: ', '');
+        const deadline = taskProperties[1].replace('Deadline: ', '');
+        const comment = taskProperties[2].replace('Comment: ', '');
+
+        // Create task element and add it to the taskList
+        const taskElement = createTaskElement(title, deadline, comment);
+        taskList.appendChild(taskElement);
+      });
+
+      // Save the updated tasks to storage
+      saveTasksToStorage();
+
+      // Update the total number of tasks
+      updateTotalTasks();
+    }
+// ... (Your existing JavaScript code)
+      
       function addTask() {
         const newTaskTitle = document.getElementById('newTaskTitle').value;
         const newTaskDeadline = document.getElementById('newTaskDeadline').value;
@@ -325,45 +364,6 @@
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
       });
-
- function handleFileUpload(event) {
-      const file = event.target.files[0];
-
-      if (file) {
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-          const fileContent = e.target.result;
-          processUploadedTasks(fileContent);
-        };
-
-        reader.readAsText(file);
-      }
-    }
-
-    function processUploadedTasks(fileContent) {
-      // Split the file content into tasks based on empty lines
-      const tasks = fileContent.split('\n\n');
-
-      // Process each task and add it to the taskList
-      tasks.forEach(taskContent => {
-        const taskProperties = taskContent.split('\n');
-        const title = taskProperties[0].replace('Title: ', '');
-        const deadline = taskProperties[1].replace('Deadline: ', '');
-        const comment = taskProperties[2].replace('Comment: ', '');
-
-        // Create task element and add it to the taskList
-        const taskElement = createTaskElement(title, deadline, comment);
-        taskList.appendChild(taskElement);
-      });
-
-      // Save the updated tasks to storage
-      saveTasksToStorage();
-
-      // Update the total number of tasks
-      updateTotalTasks();
-    }
-// ... (Your existing JavaScript code)
 
 function shareTasks() {
   const tasks = [];
