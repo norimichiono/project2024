@@ -189,47 +189,50 @@
 
       let ascendingOrder = true;
 
-      function createTaskElement(title, deadline, comment) {
-        const listItem = document.createElement('li');
-        listItem.className = 'task';
-        
-        const taskTitle = document.createElement('div');
-        taskTitle.className = 'title';
-        taskTitle.innerText = title;
+ function createTaskElement(title, deadline, comment) {
+  const listItem = document.createElement('li');
+  listItem.className = 'task';
 
-        const deadlineContainer = document.createElement('div');
-        deadlineContainer.className = 'input-group';
-        const dateLabel = document.createElement('label');
-        dateLabel.innerText = '期限';
-        const deadlineInput = document.createElement('input');
-        deadlineInput.type = 'date';
-        deadlineInput.value = deadline;
-        deadlineContainer.appendChild(dateLabel);
-        deadlineContainer.appendChild(deadlineInput);
+  const taskTitle = document.createElement('div');
+  taskTitle.className = 'title';
+  taskTitle.innerText = title;
 
-        const commentTextarea = document.createElement('textarea');
-        commentTextarea.value = comment;
-        commentTextarea.placeholder = '
-  </div>
-  <textarea id="newTaskComment" placeholder="To Doの概要を書いてください。';
-        commentTextarea.className = 'comment';
+  const taskInfo = document.createElement('div');
+  taskInfo.className = 'task-info';
 
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = '削除';
-        deleteButton.addEventListener('click', () => deleteTask(listItem, title));
+  const deadlineContainer = document.createElement('div');
+  deadlineContainer.className = 'input-group';
+  const dateLabel = document.createElement('label');
+  dateLabel.innerText = '期限';
+  const deadlineInput = document.createElement('input');
+  deadlineInput.type = 'date';
+  deadlineInput.value = deadline;
+  deadlineContainer.appendChild(dateLabel);
+  deadlineContainer.appendChild(deadlineInput);
 
-        listItem.appendChild(taskTitle);
-        listItem.appendChild(deadlineContainer);
-        listItem.appendChild(commentTextarea);
-        listItem.appendChild(deleteButton);
+  const deleteButton = document.createElement('button');
+  deleteButton.innerText = '削除';
+  deleteButton.addEventListener('click', () => deleteTask(listItem, title));
 
-        taskTitle.addEventListener('click', () => {
-          const comment = listItem.querySelector('.comment');
-          comment.style.display = comment.style.display === 'none' ? 'block' : 'none';
-        });
+  taskInfo.appendChild(deadlineContainer);
+  taskInfo.appendChild(deleteButton);
 
-        return listItem;
-      }
+  const commentTextarea = document.createElement('textarea');
+  commentTextarea.value = comment;
+  commentTextarea.placeholder = '間柄、年代、現職、職歴、配偶者、扶養家族、ネットワーク経験、趣味、など';
+  commentTextarea.className = 'comment';
+
+  listItem.appendChild(taskTitle);
+  listItem.appendChild(taskInfo);
+  listItem.appendChild(commentTextarea);
+
+  taskTitle.addEventListener('click', () => {
+    const comment = listItem.querySelector('.comment');
+    comment.style.display = comment.style.display === 'none' ? 'block' : 'none';
+  });
+
+  return listItem;
+}
 
       function addTask() {
         const newTaskTitle = document.getElementById('newTaskTitle').value;
