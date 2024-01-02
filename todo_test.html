@@ -31,6 +31,7 @@
       border-bottom: 1px solid #ccc;
       padding: 10px;
       font-size: 25px; /* Adjust the font size according to your preference */
+      white-space: nowrap; /* Prevent content from wrapping */
     }
 
     .task input[type="date"],
@@ -202,8 +203,10 @@
 
   const deadlineContainer = document.createElement('div');
   deadlineContainer.className = 'input-group';
+   
   const dateLabel = document.createElement('label');
   dateLabel.innerText = '期限';
+   
   const deadlineInput = document.createElement('input');
   deadlineInput.type = 'date';
   deadlineInput.value = deadline;
@@ -213,7 +216,6 @@
   const deleteButton = document.createElement('button');
   deleteButton.innerText = '削除';
   deleteButton.addEventListener('click', () => deleteTask(listItem, title));
-
   taskInfo.appendChild(deadlineContainer);
   taskInfo.appendChild(deleteButton);
 
