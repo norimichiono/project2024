@@ -138,15 +138,7 @@
       margin: auto; /* Center horizontally */
       display: block; /* Ensure the button is a block-level element for margin:auto to work */
 }
-
-    .taskCheckbox {
-  margin-right: 10px; /* Adjust the margin as needed */
-}
-
-.taskCheckbox:checked {
-  background-color: #00FF00; /* Green color */
-}
-    
+ 
     .input-group {
       display: flex;
       align-items: center;
@@ -200,12 +192,6 @@
       function createTaskElement(title, deadline, comment) {
         const listItem = document.createElement('li');
         listItem.className = 'task';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'taskCheckbox';
-
-        listItem.appendChild(checkbox);
         
         const taskTitle = document.createElement('div');
         taskTitle.className = 'title';
