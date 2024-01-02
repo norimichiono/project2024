@@ -78,7 +78,26 @@
       height: 300px; /* Adjust the height according to your preference */
     }
 
-    #addTaskButton,
+    #buttonContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 20px; /* Add margin for spacing */
+    }
+
+    #addTaskButton
+    {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+    }
+
     #sortButton
     {
       background-color: #4CAF50;
@@ -89,6 +108,8 @@
       width: 100%;
       max-width: 150px;
       font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
     }
 
         #shareButton
@@ -101,6 +122,8 @@
       width: 100%;
       max-width: 150px;
       font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
     }
     
     .task button {
@@ -148,9 +171,11 @@
 
   <p>人数: <span id="totalTasks">0</span></p>
 
+  <div id="buttonContainer">
   <button id="sortButton">並び替え</button>
   <button id="shareButton" class="button">共有</button>
-
+  </div>
+    
   <ul id="taskList"></ul>
 
   <script>
