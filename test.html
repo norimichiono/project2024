@@ -62,7 +62,9 @@
     }
 
     #addTaskButton,
-    #sortButton {
+    #sortButton,
+    #sortButton
+    {
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -89,6 +91,8 @@
     .input-group label {
       margin-right: 5px;
     }
+
+    
   </style>
 </head>
 
@@ -97,16 +101,20 @@
   <h1>「TEST版」のリスト</h1>
  <!-- Back button to return to the login page -->
   <a href="index.html">戻る</a>
+
   <div id="addTaskForm">
-    <input type="text" id="newTaskTitle" placeholder="名前">
-    <div class="input-group">
-      <label for="newTaskDeadline">日付</label>
-      <input type="date" id="newTaskDeadline">
-    </div>
-    <textarea id="newTaskComment" placeholder="コメント"></textarea>
-    <button id="addTaskButton">追加</button>
+  <input type="text" id="newTaskTitle" placeholder="名前">
+  <div class="input-group">
+    <label for="newTaskDeadline">日付</label>
+    <input type="date" id="newTaskDeadline">
   </div>
+  <textarea id="newTaskComment" placeholder="コメント"></textarea>
+  <button id="addTaskButton" class="button">追加</button>
+  <button id="shareButton" class="button">共有</button>
+</div>
+
   <a href="index.html">完了</a>
+  <button id="shareButton" class="button">共有</button>
   <p>人数: <span id="totalTasks">0</span></p>
 
   <button id="sortButton">並び替え</button>
@@ -241,6 +249,28 @@
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
       });
+
+      // ... (Your existing JavaScript code)
+
+function shareTasks() {
+  const tasks = [];
+  Array.from(taskList.children).forEach(task => {
+    const title = task.querySelector('.title').innerText;
+    const deadline = task.querySelector('input[type="date"]').value;
+    const comment = task.querySelector('textarea').value;
+    tasks.push(`Title: ${title}\nDeadline: ${deadline}\nComment: ${comment}\n\n`);
+  });
+
+  // Convert tasks to plain text format
+  const textContent = tasks.join('');
+
+  // Prompt the user with the tasks for copying
+  prompt('Copy and share the tasks:', textContent);
+}
+
+document.getElementById('shareButton').addEventListener('click', shareTasks);
+
+// ... (Your existing JavaScript code)
 
       updateTotalTasks();
     });
