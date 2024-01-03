@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fceaef;
+            text-align: center;
+        }
+
+        .faq-section {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #4caf50;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            width: 400px; /* Adjust the width according to your preference */
+            max-width: 400px; /* Limit the max width for better readability */
+            color: #ffffff; /* Set the question text color */
+        }
+
+        .answer {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 5px;
+            background-color: #ffffff;
+            width: 400px; /* Adjust the width according to your preference */
+            max-width: 400px; /* Limit the max width for better readability */
+            margin-left: auto; /* Align the answer to the right */
+            margin-right: auto;
+            text-align: left; /* Align text to the left within the answer */
+        }
+
+        /* Style for the menu */
+        nav {
+            display: flex;
+            justify-content: center; /* Center the menu items */
+            background-color: #fceaef;
+            padding: 10px;
+            width: 100%;
+        }
+
+        /* Style for the menu items */
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            width: 90px; /* Adjust the width according to your preference */
+            border: 1px solid #999; /* Add border styling here */
+        }
+
+        /* Style for the logo */
+        .logo-container {
+            text-align: center;
+            padding: 20px; /* Adjust the padding as needed */
+        }
+
+        .logo {
+            max-width: 100%; /* Make sure the logo doesn't exceed its original size */
+            height: auto; /* Maintain the aspect ratio */
+        }
+
+        /* Style for the clickable link */
+        a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Logo at the top, centered -->
+    <div class="logo-container">
+        <img class="logo" src="https://live.staticflickr.com/65535/53440041205_f981e53f9a_m.jpg" alt="Your Logo">
+    </div>
+
+    <h1>よくある質問 FAQ</h1>
+
+    <!-- Menu -->
+    <nav>
+        <!-- Button to Task list -->
+        <a href="todo_test.html">To Doへ</a>
+        <!-- Button to Booking page -->
+        <a href="calendar.html">アポ予約</a>
+    </nav>
+
+    <div class="faq-section">
+        <div class="question" onclick="toggleAnswer(this)">Q: どうして名簿を作るの？</div>
+        <div class="answer">
+            <p>名簿をつくる目的は、まず、アプローチする相手の優先順位を考えて、戦略を効果的に進めるために役立ちます。さらに、新規さんとのやりとりや進捗状況をメモして、ビジネスと新規さんとの関係を管理するのに使えます。同時に、どんなアプローチが一番いいかを考えるために、名簿の情報をもとにリーダーと相談することも大切です。そうすることで、お客さんに合ったアプローチが見つかり、ビジネスが成功につながります。</p>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question" onclick="toggleAnswer(this)">Q: To Doリストはどうして大事？</div>
+        <div class="answer">
+            <p>To Doリストは日常を整理し、効率的に進める強力なツールです。タスクを忘れずにこなし、小さな成功が大きな目標に繋がります。計画的な行動で時間とストレスの節約にもなり、楽しみも増えます。個人で活用するもよし、仲間と共有して効果的なチームワークを実現することができます。To Doリストは充実感とポジティブなスタートを提供します。</p>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="question" onclick="toggleAnswer(this)">Q: 宮竹さゆりさんってどんな人？</div>
+        <div class="answer">
+            <p>宮竹さゆりさんは、熊本出身で舞台女優を目指して18歳で上京。結婚を置きに当時の旦那と広告代理店を起業し、経営を担当。億単位の成功を収めました。旦那との生活の価値観の不一致離婚、ナチュラリープラスで起業し、過去の人脈を使わず1億円の年商を達成。
+
+2021年11月、田嶋社長の戦略秘書の小野さんとの電話で再び目覚め、グローバルに活躍することを決断。コロナの影響もありつつ、月収180万円に到達。田嶋社長と今は直接組み、新たなパートナーの募集を通じて目標に向かって挑戦し、根底から人生を変えられる事を広げています。</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(question) {
+            const answer = question.nextElementSibling;
+            answer.style.display = (answer.style.display === 'none' || answer.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+
+</html>
