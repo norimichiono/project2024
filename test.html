@@ -149,6 +149,24 @@
       margin-right: 5px;
     }
 
+                /* Style for the menu */
+        nav {
+            display: flex;
+            justify-content: space-between; /* or space-evenly */
+            background-color: #fceaef;
+            padding: 10px;
+        }
+
+        /* Style for the menu items */
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            border: 1px solid #999; /* Add border styling here */
+ 
+        }
     
   </style>
 </head>
@@ -159,6 +177,14 @@
  <!-- Button to To Do list -->
   <a href="todo_test.html">To Doリストへ</a>
 
+      <!-- Menu -->
+    <nav>
+        <!-- Button to Task list -->
+        <a href="test.html">名簿一覧</a>
+        <!-- Button to Booking page -->
+        <a href="todo_test.html">To Doリストへ</a>
+    </nav>
+  
   <div id="addTaskForm">
   <input type="text" id="newTaskTitle" placeholder="名前">
   <div class="input-group">
