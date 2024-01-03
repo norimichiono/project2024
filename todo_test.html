@@ -300,7 +300,8 @@
         if (completed) {
           completeButton.classList.add('completed');
         }
-completeButton.addEventListener('click', function() {
+completeButton.addEventListener('click', function(event) {
+  event.stopPropagation(); // Stop the click event from propagating to the parent elements
   completeTask(completeButton);
   // Uncheck the checkbox on touch devices
   completeButton.blur(); // Remove focus to ensure checkbox state change
