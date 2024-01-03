@@ -300,9 +300,11 @@
         if (completed) {
           completeButton.classList.add('completed');
         }
-        completeButton.addEventListener('click', () => completeTask(completeButton));
-        completeButton.addEventListener('touchstart', () => completeTask(completeButton));    
-
+completeButton.addEventListener('click', function() {
+  completeTask(completeButton);
+  // Uncheck the checkbox on touch devices
+  completeButton.blur(); // Remove focus to ensure checkbox state change
+});
         listItem.appendChild(taskTime);
         listItem.appendChild(taskTitle);
         listItem.appendChild(completeButton);
