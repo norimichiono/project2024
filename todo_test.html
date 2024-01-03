@@ -49,15 +49,24 @@
       color: #333;
     }
 
-     #newTaskDate::placeholder,
+  #newTaskDate,
+  #newTaskTime,
+  #newTaskTitle {
+    padding: 10px;  /* Adjust the padding for comfortable spacing */
+    box-sizing: border-box;
+    width: 100%;    /* Take up the full available width */
+    font-size: 25px; /* Match the font size of the surrounding text */
+    margin-bottom: 10px; /* Add some bottom margin for separation */
+  }
+    
+  #newTaskDate::placeholder,
   #newTaskTime::placeholder,
   #newTaskTitle::placeholder {
-  padding: 10px;  /* Adjust the padding for comfortable spacing */
-  box-sizing: border-box;
-  width: 100%;    /* Take up the full available width */
-  font-size: 25px; /* Match the font size of the surrounding text */
-  margin-bottom: 10px; /* Add some bottom margin for separation */
+    font-size: 25px; /* Adjust the font size of the placeholder */
+    color: #999;     /* Adjust the color of the placeholder if needed */
   }
+
+    
 
 
     div {
