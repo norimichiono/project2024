@@ -301,6 +301,7 @@
           completeButton.classList.add('completed');
         }
         completeButton.addEventListener('click', () => completeTask(completeButton));
+        completeButton.addEventListener('touchstart', () => completeTask(completeButton));    
 
         listItem.appendChild(taskTime);
         listItem.appendChild(taskTitle);
