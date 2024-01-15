@@ -223,20 +223,20 @@
           const comment = task.querySelector('textarea').value;
           tasks.push({ title, deadline, comment });
         });
-        localStorage.setItem('user8_tasks', JSON.stringify(tasks));
+        localStorage.setItem('user15', JSON.stringify(tasks));
       }
 
       function removeFromStorage(title) {
-        const tasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+        const tasks = JSON.parse(localStorage.getItem('user15')) || [];
         const updatedTasks = tasks.filter(task => task.title !== title);
-        localStorage.setItem('user8_tasks', JSON.stringify(updatedTasks));
+        localStorage.setItem('user15', JSON.stringify(updatedTasks));
       }
 
       addTaskButton.addEventListener('click', addTask);
       sortButton.addEventListener('click', sortTasksByDeadline);
 
       // Load tasks from storage on page load
-      const storedTasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+      const storedTasks = JSON.parse(localStorage.getItem('user15')) || [];
       storedTasks.forEach(task => {
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
