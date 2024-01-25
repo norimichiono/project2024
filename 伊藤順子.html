@@ -8,19 +8,24 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      margin: 0;
+      background-color: #FFFFFF;
+      text-align: center; /* Add text-align: center to center inline elements */
     }
+
 
     #taskList {
       list-style-type: none;
       padding: 0;
       width: 100%;
       max-width: 400px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .task {
@@ -28,6 +33,7 @@
       flex-direction: column;
       border-bottom: 1px solid #ccc;
       padding: 10px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .task input[type="date"],
@@ -36,50 +42,104 @@
       width: 100%;
       padding: 8px;
       box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .comment {
       display: none;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      height: 500px; /* Adjust the height according to your preference */
     }
 
     .title {
       cursor: pointer;
       font-weight: bold;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     #addTaskForm {
       margin-bottom: 20px;
       width: 100%;
       max-width: 400px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     #addTaskForm input[type="text"],
-    #addTaskForm input[type="date"],
+    #addTaskForm input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
+    }
+
     #addTaskForm textarea {
       width: 100%;
       padding: 8px;
       box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      height: 300px; /* Adjust the height according to your preference */
     }
 
-    #addTaskButton,
-    #sortButton {
+    #buttonContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px; /* Add margin for spacing */
+    }
+
+    #addTaskButton
+    {
       background-color: #4CAF50;
       color: white;
       border: none;
       padding: 8px 16px;
       cursor: pointer;
       width: 100%;
-      max-width: 400px;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
-    .task button {
-      background-color: #ff3333;
+    #sortButton
+    {
+      background-color: #4CAF50;
       color: white;
       border: none;
-      padding: 8px;
+      padding: 8px 16px;
       cursor: pointer;
-      width: auto;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
     }
+
+        #shareButton
+    {
+      background-color: #FFFFFFF;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
+    }
+    
+.task button {
+  background-color: #ff3333;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100px;
+  font-size: 25px; /* Adjust the font size according to your preference */
+  margin: auto; /* Center horizontally */
+  display: block; /* Ensure the button is a block-level element for margin:auto to work */
+}
 
     .input-group {
       display: flex;
@@ -89,6 +149,39 @@
     .input-group label {
       margin-right: 5px;
     }
+
+
+            /* Style for the logo */
+        .logo-container {
+            text-align: center;
+            padding: 20px; /* Adjust the padding as needed */
+        }
+
+        .logo {
+            max-width: 100%; /* Make sure the logo doesn't exceed its original size */
+            height: auto; /* Maintain the aspect ratio */
+        }
+
+        /* Style for the clickable link */
+        a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+        }
+
+            footer {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer p {
+      display: inline;
+      margin: 0 10px;
+    }
+    
   </style>
 </head>
 
@@ -109,8 +202,11 @@
   <a href="index.html">完了</a>
   <p>人数: <span id="totalTasks">0</span></p>
 
+  <div id="buttonContainer">
   <button id="sortButton">並び替え</button>
-
+  <button id="shareButton" class="button">共有</button>
+  </div>
+  
   <ul id="taskList"></ul>
 
   <script>
@@ -223,25 +319,55 @@
           const comment = task.querySelector('textarea').value;
           tasks.push({ title, deadline, comment });
         });
-        localStorage.setItem('user8_tasks', JSON.stringify(tasks));
+        localStorage.setItem('user8', JSON.stringify(tasks));
       }
 
       function removeFromStorage(title) {
-        const tasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+        const tasks = JSON.parse(localStorage.getItem('user8')) || [];
         const updatedTasks = tasks.filter(task => task.title !== title);
-        localStorage.setItem('user8_tasks', JSON.stringify(updatedTasks));
+        localStorage.setItem('user8', JSON.stringify(updatedTasks));
       }
 
       addTaskButton.addEventListener('click', addTask);
       sortButton.addEventListener('click', sortTasksByDeadline);
 
       // Load tasks from storage on page load
-      const storedTasks = JSON.parse(localStorage.getItem('user8_tasks')) || [];
+      const storedTasks = JSON.parse(localStorage.getItem('user8')) || [];
       storedTasks.forEach(task => {
         const taskElement = createTaskElement(task.title, task.deadline, task.comment);
         taskList.appendChild(taskElement);
       });
+// ... (Your existing JavaScript code)
 
+function shareTasks() {
+  const tasks = [];
+  Array.from(taskList.children).forEach(task => {
+    const title = task.querySelector('.title').innerText;
+    const deadline = task.querySelector('input[type="date"]').value;
+    const comment = task.querySelector('textarea').value;
+    tasks.push(`名前： ${title}\n日付： ${deadline}\nコメント： ${comment}\n\n`);
+  });
+
+  // Convert tasks to plain text format
+  const textContent = tasks.join('');
+
+  // Create a temporary textarea to copy text to the clipboard
+  const textarea = document.createElement('textarea');
+  textarea.value = textContent;
+  document.body.appendChild(textarea);
+  
+  // Select and copy the text
+  textarea.select();
+  document.execCommand('copy');
+
+  // Remove the temporary textarea
+  document.body.removeChild(textarea);
+
+  // Provide some feedback to the user
+  alert('テキストがコピーされました！');
+}
+
+document.getElementById('shareButton').addEventListener('click', shareTasks);
       updateTotalTasks();
     });
   </script>
