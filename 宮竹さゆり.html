@@ -8,19 +8,31 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      margin: 0;
+      background-color: #fceaef;
+      text-align: center; /* Add text-align: center to center inline elements */
+            opacity: 0;
+            transform: translateY(50px); /* Initial position below */
+            transition: opacity 2.0s ease, transform 2.0s ease;
     }
+
+            body.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
     #taskList {
       list-style-type: none;
       padding: 0;
       width: 100%;
       max-width: 400px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .task {
@@ -28,6 +40,7 @@
       flex-direction: column;
       border-bottom: 1px solid #ccc;
       padding: 10px;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .task input[type="date"],
@@ -36,15 +49,19 @@
       width: 100%;
       padding: 8px;
       box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     .comment {
       display: none;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      height: 500px; /* Adjust the height according to your preference */
     }
 
     .title {
       cursor: pointer;
       font-weight: bold;
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     #addTaskForm {
@@ -130,15 +147,6 @@
   margin: auto; /* Center horizontally */
   display: block; /* Ensure the button is a block-level element for margin:auto to work */
 }
-    
-    .task button {
-      background-color: #ff3333;
-      color: white;
-      border: none;
-      padding: 8px;
-      cursor: pointer;
-      width: auto;
-    }
 
     .input-group {
       display: flex;
@@ -148,6 +156,58 @@
     .input-group label {
       margin-right: 5px;
     }
+
+           /* Style for the menu */
+        nav {
+            display: flex;
+            justify-content: space-between; /* or space-evenly */
+            background-color: #fceaef;
+            padding: 10px;
+        }
+
+        /* Style for the menu items */
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            width: 80px; /* Adjust the width according to your preference */
+            border: 1px solid #999; /* Add border styling here */
+ 
+        }
+
+            /* Style for the logo */
+        .logo-container {
+            text-align: center;
+            padding: 20px; /* Adjust the padding as needed */
+        }
+
+        .logo {
+            max-width: 100%; /* Make sure the logo doesn't exceed its original size */
+            height: auto; /* Maintain the aspect ratio */
+        }
+
+        /* Style for the clickable link */
+        a {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+        }
+
+            footer {
+      margin-top: 20px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer p {
+      display: inline;
+      margin: 0 10px;
+    }
+    
   </style>
 </head>
 
