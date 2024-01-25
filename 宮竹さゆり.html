@@ -51,46 +51,84 @@
       margin-bottom: 20px;
       width: 100%;
       max-width: 400px;
-      text-align: center; /* Center the content horizontally */
+      font-size: 25px; /* Adjust the font size according to your preference */
     }
 
     #addTaskForm input[type="text"],
-    #addTaskForm input[type="date"],
+    #addTaskForm input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
+    }
+
     #addTaskForm textarea {
       width: 100%;
       padding: 8px;
       box-sizing: border-box;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      height: 300px; /* Adjust the height according to your preference */
+    }
+
+    #buttonContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px; /* Add margin for spacing */
+    }
+
+    #addTaskButton
+    {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+    }
+
+    #sortButton
+    {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
+    }
+
+        #shareButton
+    {
+      background-color: #FFFFFFF;
+      color: black;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      width: 100%;
+      max-width: 150px;
+      font-size: 25px; /* Adjust the font size according to your preference */
+      width: calc(50% - 8px); /* Adjust the width of each button with spacing */
+      text-align: center; /* Center the text within the button */
     }
     
-#addTaskButton {
-  background-color: #4CAF50;
+.task button {
+  background-color: #ff3333;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 8px;
   cursor: pointer;
   width: 100%;
   max-width: 100px;
-  font-size: 20px; /* Adjust the font size according to your preference */
-  text-align: center; /* Center the text within the button */
-}
-
-#buttonContainer {
-  display: flex;
-  justify-content: space-around; /* Ensure the buttons are spaced apart with space around */
-  text-align: center; /* Center the content horizontally */
-}
-
-#sortButton,
-#shareButton {
-  background-color: #4CAF50; /* Apply the common styles */
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  width: 100%;
-  max-width: 150px; /* Adjust the max-width for more width */
-  font-size: 20px; /* Adjust the font size according to your preference */
-  text-align: center; /* Center the text within the button */
+  font-size: 25px; /* Adjust the font size according to your preference */
+  margin: auto; /* Center horizontally */
+  display: block; /* Ensure the button is a block-level element for margin:auto to work */
 }
     
     .task button {
